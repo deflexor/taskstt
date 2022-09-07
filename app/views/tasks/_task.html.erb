@@ -1,0 +1,34 @@
+<div id="<%= dom_id task %>">
+  <p>
+    <strong>Title:</strong>
+    <%= task.title %>
+  </p>
+
+  <p>
+    <strong>Status:</strong>
+    <%= task.status %>
+  </p>
+
+  <% if task.ends_at -%>
+  <p>
+    <strong>Ends at:</strong>
+    <%= time_tag task.ends_at, "data-local": "time-ago" %>
+  </p>
+  <% end -%>
+
+  <p>
+    <strong>Deadline at:</strong>
+    <%= task.deadline_at %>
+  </p>
+
+  <p>
+    <strong>Canceled at:</strong>
+    <%= task.canceled_at %>
+  </p>
+
+  <p>
+    <strong>Completed at:</strong>
+    <%= task.completed_at %>
+  </p>
+
+</div>

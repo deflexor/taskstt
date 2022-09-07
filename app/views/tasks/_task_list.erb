@@ -1,0 +1,16 @@
+
+<div class="card">
+  <header class="card-header">
+    <p class="card-header-title">
+      <%= title %>
+    </p>
+  </header>
+  <div class="card-content">
+    <% tasks.each do |task| %>
+      <%= render task %>
+      <p>
+        <%= link_to "Show this task", task %>
+      </p>
+    <% end %>
+  </div>
+</div>
