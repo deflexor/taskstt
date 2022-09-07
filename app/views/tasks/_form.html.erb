@@ -1,6 +1,6 @@
-<%= form_with(model: task) do |form| %>
+<%= form_with(model: task, class: "contents", data: { action: "turbo-modal#hideModal" }) do |form| %>
   <% if task.errors.any? %>
-    <div style="color: red">
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
       <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
 
       <ul>
@@ -11,37 +11,22 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
+  <div class="my-5">
+    <%= form.label :title %>
+    <%= form.text_field :title, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
 
-  <div>
-    <%= form.label :status, style: "display: block" %>
-    <%= form.text_field :status %>
+  <div class="my-5">
+    <%= form.label :ends_at %>
+    <%= form.datetime_field :ends_at, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
 
-  <div>
-    <%= form.label :ends_at, style: "display: block" %>
-    <%= form.datetime_field :ends_at %>
+  <div class="my-5">
+    <%= form.label :deadline_at %>
+    <%= form.datetime_field :deadline_at, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
 
-  <div>
-    <%= form.label :deadline_at, style: "display: block" %>
-    <%= form.datetime_field :deadline_at %>
-  </div>
-
-  <div>
-    <%= form.label :canceled_at, style: "display: block" %>
-    <%= form.datetime_field :canceled_at %>
-  </div>
-
-  <div>
-    <%= form.label :completed_at, style: "display: block" %>
-    <%= form.datetime_field :completed_at %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+  <div class="inline">
+    <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
   </div>
 <% end %>

@@ -51,7 +51,6 @@ gem "bootsnap", require: false
 gem 'aasm'
 gem 'after_commit_everywhere', '~> 1.0'
 gem 'devise'
-gem "bulma-rails", "~> 0.9.3"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -75,3 +74,9 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
 end
+
+gem "view_component", "~> 2.71"
+
+gem "tailwindcss-rails", "~> 2.0"
+
+gem "sassc", "~> 2.4"

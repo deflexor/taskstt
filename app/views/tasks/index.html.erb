@@ -1,23 +1,26 @@
 
-<h3 class="has-text-centered">Задачи</h2>
+<div class="w-full">
+  <% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+  <% end %>
 
-<div id="tasks">
-  <div class="columns">
-    <div class="column">
-      <%= render "task_list", tasks: @tasks[:new], title: "Новые" %>
-    </div>
-    <div class="column">
-      <%= render "task_list", tasks: @tasks[:in_progress], title: "in_progress" %>
-    </div>  
+  <div class="flex justify-between items-center">
+    <h1 class="font-bold text-4xl">Tasks</h1>
   </div>
-  <div id="tasks" class="columns">
-    <div class="column">
-      <%= render "task_list", tasks: @tasks[:cancelled], title: "Отмена" %>
-    </div>
-    <div class="column">
-      <%= render "task_list", tasks: @tasks[:completed], title: "Вып" %>
-    </div>  
+
+
+  <div id="tasks" class="min-w-full grid grid-cols-2 grid4 gap-4">
+    <%= render "task_list", tasks: @tasks[:new], title: "Новые" %>
+    <%= render "task_list", tasks: @tasks[:in_progress], title: "in_progress" %>
+    <%= render "task_list", tasks: @tasks[:cancelled], title: "Отмена" %>
+    <%= render "task_list", tasks: @tasks[:completed], title: "Вып" %>
   </div>
+
+
+  <div class="mt-6 flex">
+    <%= button_to 'New task', new_task_path, class: "ml-12 px-4 py-2 font-semibold text-sm bg-cyan-500 text-white rounded-full shadow-sm", method: :get, data: { turbo_frame: 'modal' } %>
+  </div>
+
+  
 </div>
 
-<%= link_to "New task", new_task_path %>

@@ -26,27 +26,22 @@ class TasksController < ApplicationController
   # POST /tasks or /tasks.json
   def create
     @task = Task.new(task_params)
-
     respond_to do |format|
       if @task.save
-        format.html { redirect_to task_url(@task), notice: "Task was successfully created." }
-        format.json { render :show, status: :created, location: @task }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
+        format.turbo_stream {
+           render turbo_stream: turbo_stream.prepend('task-new',
+             partial: 'tasks/task_short',
+             locals: {task: @task}) }
+        format.html { redirect_to task_url(@task), notice: "task was successfully created." }
       end
     end
   end
 
-  # PATCH/PUT /tasks/1 or /tasks/1.json
   def update
     respond_to do |format|
       if @task.update(task_params)
-        format.html { redirect_to task_url(@task), notice: "Task was successfully updated." }
-        format.json { render :show, status: :ok, location: @task }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @task.errors, status: :unprocessable_entity }
+        format.turbo_stream { render turbo_stream: turbo_stream.replace(@task, partial: "tasks/task_short", locals: {task: @task}) }
+        format.html { redirect_to task_url(@task), notice: "task was successfully updated." }
       end
     end
   end
@@ -69,6 +64,6 @@ class TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.require(:task).permit(:title, :status, :ends_at, :deadline_at, :canceled_at, :completed_at)
+      params.require(:task).permit(:title, :ends_at, :deadline_at, :canceled_at, :completed_at)
     end
 end

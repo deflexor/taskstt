@@ -1,16 +1,17 @@
 
-<div class="card">
-  <header class="card-header">
-    <p class="card-header-title">
+<div class="shadow-md max-h-full overflow-y-auto">
+  <header class="shadow-neutral-100">
+    <p class="font-bold ">
       <%= title %>
     </p>
   </header>
-  <div class="card-content">
+  <ul class="card-content menu-list max-h-full overflow-y-auto" style="padding: 0.2rem">
+    <%= turbo_frame_tag "task-new" %>
     <% tasks.each do |task| %>
-      <%= render task %>
-      <p>
-        <%= link_to "Show this task", task %>
-      </p>
+      <%= render "task_short", task: task %>
     <% end %>
-  </div>
+    <% if tasks.empty? -%>
+      <li class="has-text-grey-light">Задач нет</li>
+    <% end -%>
+  </ul>
 </div>
