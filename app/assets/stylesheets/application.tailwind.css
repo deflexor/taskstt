@@ -13,13 +13,33 @@
 */
 
 .btn {
-  @apply py-2 px-4  rounded-md font-semibold text-sm text-white shadow-sm;
+  @apply py-2 px-4 rounded-md font-semibold text-sm text-white shadow-sm;
+}
+
+.btn-xs {
+  @apply font-normal py-1 px-2 text-xs rounded;
 }
 
 .btn-blue {
-  @apply btn bg-cyan-600 text-white;
+  @apply bg-cyan-600 text-white;
 }
 
 .btn-white {
-  @apply btn bg-blue-200 text-white;
+  @apply bg-blue-200 text-white;
+}
+
+.btn-lime {
+  @apply bg-lime-600 text-white;
+}
+
+.btn-red {
+  @apply bg-red-600 text-white;
+}
+
+.btn-orange {
+  @apply bg-amber-600 text-white;
+}
+
+.btn-pink {
+  @apply bg-pink-300 text-indigo-900;
 }

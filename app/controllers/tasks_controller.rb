@@ -1,41 +1,62 @@
 class TasksController < ApplicationController
   before_action :authenticate_user!
   before_action :set_task, only: %i[ start approve cancel complete  edit update destroy]
+  before_action :set_tasks_by_status, only: %i[ index ]
   
   def start
     @task.start!
     respond_to do |format|
-      puts format
       format.turbo_stream do 
         render turbo_stream: [
           turbo_stream.prepend("task-list-in_progress",
             partial: 'tasks/task_short',
             locals: {task: @task}
           ),
-          turbo_stream.remove("task-status-new-#{@task.id}")
+          turbo_stream.remove("task-status-new-#{@task.id}"),
+          turbo_stream.remove("no-tasks-in_progress")
         ]
       end
     end
   end
 
   def approve
-    @task.approve
+    @task.approve!(current_user)
+
+    render turbo_stream: [
+      turbo_stream.update("task-status-in_progress-#{@task.id}",
+        partial: 'tasks/task_short',
+        locals: {task: @task}
+      )
+    ]
+
   end
 
   def cancel
     @task.cancel!
+    render turbo_stream: [
+      turbo_stream.prepend("task-list-cancelled",
+        partial: 'tasks/task_short',
+        locals: {task: @task}
+      ),
+      turbo_stream.remove("task-status-in_progress-#{@task.id}"),
+      turbo_stream.remove("no-tasks-cancelled")
+    ]
   end
 
   def complete
     @task.complete!
+    render turbo_stream: [
+      turbo_stream.prepend("task-list-completed",
+        partial: 'tasks/task_short',
+        locals: {task: @task}
+      ),
+      turbo_stream.remove("task-status-in_progress-#{@task.id}"),
+      turbo_stream.remove("no-tasks-completed")
+    ]
   end
   
   # GET /tasks or /tasks.json
   def index
-    @tasks = {}
-    [:new, :in_progress, :completed, :cancelled].each do |s|
-      @tasks[s] = Task.where status: s
-    end
   end
 
   # GET /tasks/1 or /tasks/1.json
@@ -88,6 +109,13 @@ class TasksController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_task
       @task = Task.find(params[:id])
+    end
+
+    def set_tasks_by_status
+      @tasks = {}
+      [:new, :in_progress, :completed, :cancelled].each do |s|
+        @tasks[s] = Task.where status: s
+      end
     end
 
     # Only allow a list of trusted parameters through.

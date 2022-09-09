@@ -1,17 +1,19 @@
 
-<div class="shadow-md max-h-full overflow-y-auto">
-  <header class="shadow-neutral-100">
-    <p class="font-bold ">
-      <%= status %>
+<div class="shadow-md max-h-full overflow-y-auto min-h-0 basis-1/2">
+  <header class="bg-slate-100 shadow-md">
+    <p class="font-bold drop-wshadow p-4">
+      <%= status.capitalize %>
     </p>
   </header>
-  <ul class="card-content menu-list max-h-full overflow-y-auto" style="padding: 0.2rem">
+  <ul class="card-content menu-list overflow-y-auto" style="padding: 0.2rem">
     <%= turbo_frame_tag "task-list-#{status}" %>
     <% tasks.each do |task| %>
       <%= render "task_short", task: task %>
     <% end %>
-    <% if tasks.empty? -%>
-      <li class="has-text-grey-light">Задач нет</li>
+    <%= turbo_frame_tag "no-tasks-#{status}" do %>
+      <% if tasks.empty? -%>
+        <li class="has-text-grey-light">Задач нет</li>
+      <% end -%>
     <% end -%>
   </ul>
 </div>
