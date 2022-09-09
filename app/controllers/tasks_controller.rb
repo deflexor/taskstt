@@ -78,9 +78,13 @@ class TasksController < ApplicationController
     respond_to do |format|
       if @task.save
         format.turbo_stream {
-           render turbo_stream: turbo_stream.prepend('task-list-new',
+           render turbo_stream: [
+            turbo_stream.prepend('task-list-new',
              partial: 'tasks/task_short',
-             locals: {task: @task}) }
+             locals: {task: @task}),
+            turbo_stream.remove("no-tasks-new")
+          ]
+        }
         format.html { redirect_to task_url(@task), notice: "task was successfully created." }
       end
     end
