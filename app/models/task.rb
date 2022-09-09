@@ -1,5 +1,7 @@
 class Task < ApplicationRecord
   validates_presence_of :title
+  has_many :approvements, dependent: :destroy
+  has_many :approvers, through: :approvements
   include AASM
 
   aasm column: :status, timestamps: true, no_direct_assignment: true do
@@ -17,5 +19,11 @@ class Task < ApplicationRecord
     event :complete do
       transitions from: :in_progress, to: :completed
     end
-  end  
+  end
+
+  def approve
+    if(self.status == :in_progress)
+      self.approvers << current_user
+    end
+  end
 end

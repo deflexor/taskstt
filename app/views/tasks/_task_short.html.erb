@@ -1,14 +1,22 @@
-<li class="has-background-white-bis" id="<%= dom_id task %>">
-  <h4>
-    <%= task.title %>
-  </h4>
+<%= turbo_frame_tag "task-status-#{task.status}-#{task.id}" do %>
+  <li class="has-background-white-bis" id="<%= dom_id task, "li" %>">
+    <h4>
+      <%= task.title %>
+    </h4>
 
-  <p>
-    <strong>Статус:</strong>
-    <%= task.status %>
-  </p>
+    <p>
+      <strong>Статус:</strong>
+      <%= task.status %>
+    </p>
 
-  <%= link_to task do %>
-  <% end -%>  
+    <% if task.status == "new" %>
+      <%= button_to "Запустить", start_task_path(task), class: "btn", data: { turbo_frame: "task-status-#{task.status}-#{task.id}" } %>
+    <% end -%>
 
-</li>
+    <% if task.status == "in_progress" && !current_user.approved?(task) %>
+      <%= button_to "Принять", approve_task_path(task), class: "btn", data: { turbo_frame: "task-status-#{task.status}-#{task.id}"} %>
+    <% end -%>
+
+
+  </li>
+<% end -%>

@@ -1,8 +1,5 @@
 
 <div class="w-full">
-  <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-  <% end %>
 
   <div class="flex justify-between items-center">
     <h1 class="font-bold text-4xl">Tasks</h1>
@@ -10,10 +7,10 @@
 
 
   <div id="tasks" class="min-w-full grid grid-cols-2 grid4 gap-4">
-    <%= render "task_list", tasks: @tasks[:new], title: "Новые" %>
-    <%= render "task_list", tasks: @tasks[:in_progress], title: "in_progress" %>
-    <%= render "task_list", tasks: @tasks[:cancelled], title: "Отмена" %>
-    <%= render "task_list", tasks: @tasks[:completed], title: "Вып" %>
+    <%= render "task_list", tasks: @tasks[:new], status: "new" %>
+    <%= render "task_list", tasks: @tasks[:in_progress], status: "in_progress" %>
+    <%= render "task_list", tasks: @tasks[:cancelled], status: "cancelled" %>
+    <%= render "task_list", tasks: @tasks[:completed], status: "completed" %>
   </div>
 
 

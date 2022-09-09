@@ -1,7 +1,35 @@
 class TasksController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_task, only: %i[ show edit update destroy ]
+  before_action :set_task, only: %i[ start approve cancel complete  edit update destroy]
+  
+  def start
+    @task.start!
+    respond_to do |format|
+      puts format
+      format.turbo_stream do 
+        render turbo_stream: [
+          turbo_stream.prepend("task-list-in_progress",
+            partial: 'tasks/task_short',
+            locals: {task: @task}
+          ),
+          turbo_stream.remove("task-status-new-#{@task.id}")
+        ]
+      end
+    end
+  end
 
+  def approve
+    @task.approve
+  end
+
+  def cancel
+    @task.cancel!
+  end
+
+  def complete
+    @task.complete!
+  end
+  
   # GET /tasks or /tasks.json
   def index
     @tasks = {}
@@ -29,7 +57,7 @@ class TasksController < ApplicationController
     respond_to do |format|
       if @task.save
         format.turbo_stream {
-           render turbo_stream: turbo_stream.prepend('task-new',
+           render turbo_stream: turbo_stream.prepend('task-list-new',
              partial: 'tasks/task_short',
              locals: {task: @task}) }
         format.html { redirect_to task_url(@task), notice: "task was successfully created." }

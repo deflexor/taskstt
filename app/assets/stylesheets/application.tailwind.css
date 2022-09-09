@@ -11,3 +11,15 @@
 }
 
 */
+
+.btn {
+  @apply py-2 px-4  rounded-md font-semibold text-sm text-white shadow-sm;
+}
+
+.btn-blue {
+  @apply btn bg-cyan-600 text-white;
+}
+
+.btn-white {
+  @apply btn bg-blue-200 text-white;
+}

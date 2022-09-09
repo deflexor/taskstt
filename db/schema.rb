@@ -10,15 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_07_054510) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_09_134939) do
   create_table "approvements", force: :cascade do |t|
-    t.integer "user_id_id", null: false
-    t.integer "task_id_id", null: false
+    t.integer "user_id", null: false
+    t.integer "task_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index "\"user_id\", \"task_id\"", name: "index_approvements_on_user_id_and_task_id", unique: true
-    t.index ["task_id_id"], name: "index_approvements_on_task_id_id"
-    t.index ["user_id_id"], name: "index_approvements_on_user_id_id"
+    t.index ["task_id"], name: "index_approvements_on_task_id"
+    t.index ["user_id", "task_id"], name: "index_approvements_on_user_id_and_task_id", unique: true
+    t.index ["user_id"], name: "index_approvements_on_user_id"
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -44,6 +44,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_07_054510) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "approvements", "task_ids"
-  add_foreign_key "approvements", "user_ids"
+  add_foreign_key "approvements", "tasks"
+  add_foreign_key "approvements", "users"
 end

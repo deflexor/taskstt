@@ -6,10 +6,9 @@ class User < ApplicationRecord
   has_many :approvements, dependent: :destroy
   has_many :tasks, through: :approvements
 
-  def approve_task(t)
-    if(t.status == :in_progress)
-      self.tasks << t
-    end
+  def approved?(task)
+    puts "!!!! #{self.tasks.include?(task)}"
+    self.tasks.include?(task)
   end
 
   private :approvements, :approvements=, :tasks, :tasks=
