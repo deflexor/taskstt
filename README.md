@@ -1,6 +1,8 @@
 # Run in dev mode mode
 
 ```
+bundle
+rails db:migrate
 ./bin/dev
 ```
 
