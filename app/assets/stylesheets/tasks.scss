@@ -1,3 +1,25 @@
+a {
+  color: hsl(224, 67%, 50%);
+  text-decoration: underline;
+  transition: color 200ms;
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: hsl(246, 73%, 54%);
+  }
+}
+
+h1 {
+  font-size: 150% !important;
+  margin-bottom: 10px;
+}
+
+h2 {
+  font-size: 140% !important;
+  margin-bottom: 10px;
+}
+
 div.modal-1 {
   position: absolute;
   z-index: 2;

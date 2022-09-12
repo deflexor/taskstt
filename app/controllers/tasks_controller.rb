@@ -109,6 +109,12 @@ class TasksController < ApplicationController
     end
   end
 
+  def list_by_status
+    s = params[:status]
+    tasks = s ? Task.where(status: s) : Task.all
+    format.json { :tasks => tasks }
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_task
